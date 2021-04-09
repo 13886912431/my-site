@@ -1,0 +1,39 @@
+.article-toc-container,
+.article-classify-container {
+    width: 300px;
+    box-sizing: border-box;
+    padding: 20px;
+    position: relative;
+    height: 100%;
+    overflow-y: auto;
+    transition: width 0.3s;
+    h2 {
+        font-weight: bold;
+        letter-spacing: 2px;
+        font-size: 1em;
+        margin-bottom: 1em;
+    }
+}
+
+.ant-empty {
+    .self-center()
+}
+
+@media screen and (max-width: 1200px) {
+    .article-toc-container,
+    .article-classify-container {
+        width: 230px;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    
+}
+
+@media screen and (max-width: 768px) {
+    .article-toc-container,
+    .article-classify-container {
+        display: none;
+    }
+}
+
