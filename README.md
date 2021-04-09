@@ -137,6 +137,7 @@ method: GET
 				scanCount: 10,
 				commentCount: 30,
 				thumb: "缩略图地址",
+                station: "临时站位图片地址",
 				createdAt: 1604976798936
 			}
 		]
@@ -627,6 +628,7 @@ method: GET
           github: "...",
           desc: ["...", "..."],
           thumb: "...",
+          station: "临时站位图片地址",
         },
         {
           id: <id>,
@@ -635,6 +637,7 @@ method: GET
           github: "...",
           desc: ["...", "..."],
           thumb: "...",
+          station: "临时站位图片地址",
         },
     ]
 }

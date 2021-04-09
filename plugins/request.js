@@ -24,9 +24,6 @@ export default (ctx) => {
     const ins = ctx.$axios.create({
         baseURL
     });
-    // ins.interceptors.request.use(req => {
-    //     return req;
-    // });
     ins.interceptors.response.use(resp => {
         if (resp.data.code !== 0) {
             message.error(resp.data.msg);

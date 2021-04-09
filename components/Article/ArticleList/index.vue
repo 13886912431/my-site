@@ -1,14 +1,13 @@
 <template>
     <div class="article-list-container" ref="container">
-        <SquareLoading v-if="loading" />
-
-        <AEmpty description="暂无文章" v-if="!loading && data.rows.length === 0" />
+        <AEmpty description="暂无文章" v-if="data.rows.length === 0" />
 
         <ul class="list" v-else>
             <li v-for="it in data.rows" :key="it.id">
                 <div class="thumb" v-if="it.thumb">
                     <nuxt-link :to="'/article/' + it.id">
                         <img
+                            :src="it.station" 
                             v-lazy="it.thumb"
                             :alt="it.title"
                             :title="it.title"
@@ -45,8 +44,6 @@
 </template>
 
 <script>
-import SquareLoading from "@/components/Loading/SquareLoading";
-
 import scroll from "@/mixins/scroll";
 import { formatDate } from "@/utils";
 
@@ -56,16 +53,8 @@ export default {
     props: {
         data: {
             type: Object,
-            default: () => ({ rows: [] }),
-        }
-    },
-    data () {
-        return {
-            loading: false,
-        }
-    },
-    components: {
-        SquareLoading
+            default: () => ({ rows: [], total: 0 }),
+        },
     },
     computed: {
         routeInfo() {
@@ -77,9 +66,6 @@ export default {
     },
     methods: {
         formatDate,
-        async fetchData() {
-            return this.$api.getArticleList(this.routeInfo);
-        },
         handelPageChange(current) {
             const query = {
                 page: current,
@@ -101,14 +87,6 @@ export default {
             }
         },
     },
-    watch: {
-        async $route() {
-            this.loading = true;
-            this.$refs.container.scrollTop = 0;
-            this.data = await this.fetchData();
-            this.loading = false;
-        }
-    }
 };
 </script>
 

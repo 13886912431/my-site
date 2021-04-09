@@ -1,20 +1,26 @@
 <template>
     <ul class="project-container" ref="container">
-        <SquareLoading v-if="loading" />
-
         <AEmpty description="暂未上传项目" v-if="!loading && data.length === 0" />
 
         <li v-for="it in data" :key="it.id" class="project-item">
             <div class="thumb" v-if="it.thumb">
-                <a :href="it.url ? it.url : 'javascript: vold(0)'" target="_blank">
-                    <img v-lazy="it.thumb" />
-                </a>
+                <component
+                    :is="it.url ? 'a' : 'div'"
+                    :href="it.url"
+                    target="_blank"
+                >
+                    <img :src="it.station" v-lazy="it.thumb" />
+                </component>
             </div>
             <div class="info">
                 <h2>
-                    <a :href="it.url ? it.url : 'javascript: vold(0)'" target="_blank">
+                    <component
+                        :is="it.url ? 'a' : 'div'"
+                        :href="it.url"
+                        target="_blank"
+                    >
                         {{ it.name }}
-                    </a>
+                    </component>
                 </h2>
                 <a
                     class="github"
@@ -33,16 +39,11 @@
 </template>
 
 <script>
-import SquareLoading from "@/components/Loading/SquareLoading";
-
 import scroll from "@/mixins/scroll";
 import { mapState } from "vuex";
 
 export default {
     mixins: [scroll("container")],
-    components: {
-        SquareLoading
-    },
     computed: {
         ...mapState("project", ["loading", "data"])
     },
@@ -75,7 +76,8 @@ export default {
     .thumb {
         flex: 0 0 auto;
         margin-right: 15px;
-            a {
+            a,
+            div {
                 border-radius: 5px;
                 overflow: hidden;
             }

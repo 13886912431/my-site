@@ -16,7 +16,6 @@ function setImages() {
 }
 
 function setImage(imgObj) {
-    imgObj.dom.src = "http://119.23.65.235:5008/img/loading.gif";
     const { top } = imgObj.dom.getBoundingClientRect();
     if (top < window.innerHeight) {
         const newImg = new Image();

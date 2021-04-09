@@ -99,6 +99,7 @@ export function getStoreModule(defaultValue) {
                 }
                 commit('setLoading', true);
                 const res = await api();
+                console.log(res);
                 commit('setData', res);
                 commit('setLoading', false);
             }

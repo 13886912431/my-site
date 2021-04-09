@@ -37,11 +37,11 @@ export default {
         }
         return true;
     },
-    async fetch({ store: { dispatch }, $api }) {
-        await dispatch("classify/fetchData", $api);
+    async fetch({ store: { dispatch }, $api: { getArticleClassify } }) {
+        await dispatch("classify/fetchData", getArticleClassify);
     },
-    async asyncData({ $api, route }) {
-        const res = await $api.getArticleList({
+    async asyncData({ $api: { getArticleList }, route }) {
+        const res = await getArticleList({
             page: 1,
             limit: 10,
             classifyId: +route.params.id || -1,

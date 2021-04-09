@@ -57,9 +57,6 @@ export default {
     async mounted() {
         const resizeDebounce = debounce(this.resize, 200);
         window.addEventListener('resize', resizeDebounce);
-
-        const res = await this.$api.getSetting();
-        console.log(res);
     }
 }
 </script>

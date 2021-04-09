@@ -2,7 +2,7 @@
     <div class="article-container">
         <Layout>
             <template>
-                <ArticleList :data="articleList" />
+                <ArticleList :data="articleList" ref="articleList" />
             </template>
             <template #right>
                 <ArticleClassify :data="data" />
@@ -39,8 +39,20 @@ export default {
         await dispatch("classify/fetchData", getArticleClassify);
     },
     computed: {
-        ...mapState("classify", ["loading", "data"])
+        ...mapState("classify", ["loading", "data"]),
+        routeInfo() {
+            const classifyId = +this.$route.params.id || -1;  // 分类id
+            const page = +this.$route.query.page || 1;
+            const limit = +this.$route.query.limit || 10;
+            return { page, limit, classifyId };
+        }
     },
+    watch: {
+        async $route() {
+            this.articleList = await this.$api.getArticleList(this.routeInfo);
+            this.$refs.articleList.$el.scrollTop = 0;
+        }
+    }
 };
 </script>
 

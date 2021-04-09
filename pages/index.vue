@@ -1,7 +1,5 @@
 <template>
     <div class="home-container" @wheel="handleWheel">
-        <SquareLoading v-if="loading" />
-
         <ACarousel dot-position="right" arrows ref="carousel">
             <div slot="prevArrow" slot-scope="props" class="arrow up">
                 <AIcon type="up-circle" />
@@ -16,15 +14,12 @@
 
 <script>
 import CarouselItem from "@/components/CarouselItem";
-import SquareLoading from "@/components/Loading/SquareLoading";
-
 import { mapState } from "vuex";
 
 export default {
     name: "Home",
     components: {
         CarouselItem,
-        SquareLoading
     },
     async fetch({ $api: { getBanner }, store: { dispatch } }) {
         await dispatch("banner/fetchData", getBanner);

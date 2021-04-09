@@ -50,7 +50,6 @@ export default {
                 articleId: this.$route.params.id,
                 ...formData,
             });
-            console.log(res);
             this.data.rows.unshift(res);
             this.data.total++;
             callback("评论成功");

@@ -1,7 +1,9 @@
+const env = process.env.NODE_ENV;
+
 export default {
     server: {
-        port: 3000,               // 端口
-        // host: '0.0.0.0',
+        port: env === "development" ? "3000": "80",               
+        host: env === "development" ? "localhost" : "0.0.0.0",
     },
     head: {
         title: "刘胤麟的博客",
