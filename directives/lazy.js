@@ -1,6 +1,5 @@
 import $bus from "@/utils/eventBus";
 import { debounce } from "@/utils";
-import loading from "@/assets/img/loading.gif";
 
 let imgs = [];
 
@@ -17,7 +16,7 @@ function setImages() {
 }
 
 function setImage(imgObj) {
-    imgObj.dom.src = loading;
+    imgObj.dom.src = "http://119.23.65.235:5008/img/loading.gif";
     const { top } = imgObj.dom.getBoundingClientRect();
     if (top < window.innerHeight) {
         const newImg = new Image();

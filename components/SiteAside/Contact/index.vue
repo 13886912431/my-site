@@ -37,9 +37,9 @@ export default {
                 },
                 {
                     link: "",
-                    content: setting.weixin,
+                    content: setting.wx,
                     icon: "wechat",
-                    qrcode: setting.weixinQrcode,
+                    qrcode: setting.wxQrcode,
                 }
             ]
         };
