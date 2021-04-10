@@ -45,7 +45,7 @@ export default {
             const page = +this.$route.query.page || 1;
             const limit = +this.$route.query.limit || 10;
             return { page, limit, classifyId };
-        }
+        },
     },
     watch: {
         async $route() {
