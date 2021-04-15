@@ -54,7 +54,7 @@ export default {
     created() {
         this.$bus.on('menuOpen', this.toggleOpen);   
     },
-    async mounted() {
+    mounted() {
         const resizeDebounce = debounce(this.resize, 200);
         window.addEventListener('resize', resizeDebounce);
     }

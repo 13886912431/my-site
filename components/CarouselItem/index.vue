@@ -30,7 +30,7 @@ export default {
             containerSize: null,
             imageSize: null,
             mouseX: 0,
-            mouseY: 0
+            mouseY: 0,
         };
     },
     props: ["data"],
@@ -71,6 +71,7 @@ export default {
     methods: {
         handleLoad() {
             this.showWords();
+            this.$emit('load');
         },
         showWords() {
             const { title, desc } = this.$refs;
@@ -156,4 +157,11 @@ export default {
         color: lighten(@gray, 20%);
     }
 }
+
+.ant-spin-nested-loading,
+/deep/ .ant-spin-container {
+    width: 100%;
+    height: 100%;
+}
+
 </style>

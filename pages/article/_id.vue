@@ -43,15 +43,19 @@ export default {
         ArticleToc,
         ArticleComment
     },
-    async asyncData({ $api, route }) {
+    async asyncData({ $api, route, redirect }) {
         const res = await $api.getArticleDetail(route.params.id);
+        console.log(res);
+        if (!res) {
+            redirect("/article")
+        }
         return {
             data: res,
         };
     },     
     updated() {
         const hash = location.hash;
-        if (hash) {
+        if (hash && typeof document !== "undefined") {
             const dom = document.getElementById(hash.slice(1));
             if (dom) {
                 setTimeout(() => {

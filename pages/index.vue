@@ -1,5 +1,7 @@
 <template>
     <div class="home-container" @wheel="handleWheel">
+        <SquareLoading v-if="loading" />
+
         <ACarousel dot-position="right" arrows ref="carousel">
             <div slot="prevArrow" slot-scope="props" class="arrow up">
                 <AIcon type="up-circle" />
@@ -7,25 +9,33 @@
             <div slot="nextArrow" slot-scope="props" class="arrow down">
                 <AIcon type="down-circle" />
             </div>
-            <CarouselItem v-for="it in data" :key="it.id" :data="it" />
+            <CarouselItem v-for="it in data" :key="it.id" :data="it" @load="handleLoad" />
         </ACarousel>
     </div>
 </template>
 
 <script>
 import CarouselItem from "@/components/CarouselItem";
+import SquareLoading from "@/components/SquareLoading";
 import { mapState } from "vuex";
 
 export default {
     name: "Home",
     components: {
         CarouselItem,
+        SquareLoading
+    },
+    data () {
+        return {
+            loading: true,
+            num: 0,
+        }
     },
     async fetch({ $api: { getBanner }, store: { dispatch } }) {
         await dispatch("banner/fetchData", getBanner);
     },
     computed: {
-        ...mapState("banner", ['loading', 'data']),
+        ...mapState("banner", ['data']),
     },
     methods: {
         handleWheel(e) {
@@ -34,6 +44,12 @@ export default {
                 carousel.next();
             } else {
                 carousel.prev();
+            }
+        },
+        handleLoad() {
+            this.num++;
+            if (this.num >= this.data.length && this.loading) {
+                this.loading = false;
             }
         }
     }

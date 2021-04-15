@@ -2,7 +2,7 @@ const env = process.env.NODE_ENV;
 
 export default {
     server: {
-        port: env === "development" ? "3000": "80",               
+        port: env === "development" ? "3001": "80",               
         host: env === "development" ? "localhost" : "0.0.0.0",
     },
     head: {

@@ -175,6 +175,7 @@ body: {
         },
     ],
     htmlContent: "....", #文章的html内容
+    mdContent: "....", # markdown内容
     thumb: "缩略图地址" #显示到列表页
 }
 ```
@@ -251,7 +252,7 @@ method: GET
 path: /api/article/:id
 method: PUT
 body: {
-	下列数据可选，htmlContent如果有修改，记得将toc也更新
+	下列数据可选
 	title: "文章标题",
     classifyName: "vue",    #文章分类名，没有则自动创建
     desc: "文章描述，显示到列表页",  #文章描述，显示到列表页
@@ -270,6 +271,7 @@ body: {
           anchor: "title-3",
         },
     ],
+    mdContent: "....", # markdown内容
     htmlContent: "....", #文章的html内容
     thumb: "缩略图地址" #显示到列表页
 }
