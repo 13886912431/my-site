@@ -2,7 +2,7 @@
     <nav class="menu-container">
         <nuxt-link
             v-for="(it, i) in items"
-            :key="it.path"
+            :key="i"
             :to="it.path"
             :exact="it.exact"
             @click.native="handleClick"

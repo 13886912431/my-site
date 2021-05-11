@@ -1,19 +1,19 @@
 <template>
-    <ul class="comment-list-container">
-        <li v-for="it in list" :key="it.id">
+    <div class="comment-list-container">
+        <div v-for="it in list" :key="it.id" class="item">
             <AAvatar :src="it.avatar" :size="44" />
             <div class="data">
                 <div class="nickname">{{ it.nickname }}</div>
                 <div class="content">{{ it.content }}</div>
                 <div class="time">{{ formatDate(it.createdAt) }}</div>
             </div>
-        </li>
+        </div>
 
         <div class="loading">
             <ASpin size="large" v-if="listLoading" />
             <span v-if="finished">没有了啦~</span>
         </div>
-    </ul>
+    </div>
 </template>
 
 <script>
@@ -37,7 +37,7 @@ export default {
 
 <style scoped lang="less">
 .comment-list-container {
-    li {
+    .item {
         display: flex;
         padding: 15px 0;
         &:not(:last-of-type) {

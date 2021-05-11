@@ -7,7 +7,8 @@ import {
     Carousel,
     Icon,
     Button,
-    Spin
+    Spin,
+    Tag
 } from 'ant-design-vue/lib';
 
 Vue.use(Avatar)
@@ -16,4 +17,5 @@ Vue.use(Avatar)
    .use(Carousel)
    .use(Icon)
    .use(Button)
-   .use(Spin);
+   .use(Spin)
+   .use(Tag);

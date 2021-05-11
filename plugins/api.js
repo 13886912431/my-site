@@ -49,7 +49,6 @@ export default (ctx) => {
         ...project(request),
         ...message(request),
     }
-
     ctx.$api = api;
     Vue.prototype.$api = api;
 };

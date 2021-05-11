@@ -7,6 +7,9 @@
 
     事件名：menuOpen
     含义：左侧菜单是否打开
+
+    事件名：selectToc
+    含义：点击toc目录触发
  */
 
 export default (() => {

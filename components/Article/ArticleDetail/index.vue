@@ -1,6 +1,6 @@
 <template>
     <div class="article-detail-container">
-        <h1>{{ data.title }}</h1>
+        <h1 class="title">{{ data.title }}</h1>
         <div class="aside">
             <span>日期：{{ formatDate(data.createdAt) }}</span>
             <span>浏览：{{ data.scanCount }}</span>
@@ -13,14 +13,12 @@
                 </nuxt-link>
             </span>
         </div>
-        <div class="markdown-body" v-html="data.htmlContent"></div>
+        <v-md-editor mode="preview" :value="data.markdown" ref="editor"></v-md-editor>
     </div>
 </template>
 
 <script>
 import { formatDate } from "@/utils";
-import "highlight.js/styles/github.css";
-import "@/assets/style/markdown.css";
 
 export default {
     name: "ArticleDetail",
@@ -30,15 +28,35 @@ export default {
             required: true
         }
     },
+    mounted() {
+        this.$bus.on("selectToc", this.handleAnchorClick);
+    },
+    destroyed() {
+        this.$bus.remove("selectToc", this.handleAnchorClick);
+    },
     methods: {
         formatDate,
+        handleAnchorClick(line) {
+            const editor = this.$refs.editor;
+            const heading = editor.$el.querySelector(
+                `.v-md-editor-preview [data-v-md-line="${line}"]`
+            );
+
+            if (heading) {
+                editor.previewScrollToTarget({
+                    target: heading,
+                    scrollContainer: document.querySelector(".article-detail-container").parentNode,
+                    top: 0
+                });
+            }
+        }
     }
-}
+};
 </script>
 
 <style lang="less" scoped>
 .article-detail-container {
-    h1 {
+    .title {
         margin: 0.67em 0;
     }
     /deep/ img {
@@ -51,8 +69,8 @@ export default {
             margin-right: 15px;
         }
     }
-    .markdown-body {
-        margin: 2em 0;
+    .v-md-editor {
+        margin: 1em 0;
     }
 }
 </style>

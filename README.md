@@ -6,9 +6,9 @@ baseURL：http://119.23.65.235:5008/
 
 ```json
 {
-  "code": 0,        // 消息码
-  "msg": "",        // 消息
-  "data": null      // 具体的消息内容
+    "code": 0,        // 消息码
+    "msg": "",        // 消息
+    "data": null      // 具体的消息内容
 }
 ```
 
@@ -19,7 +19,7 @@ baseURL：http://119.23.65.235:5008/
 | 0: 无错误                 | 成功                   | 具体的业务结果 |
 | 401: 无权限               | 无权限的消息           | null           |
 | 406: 验证失败             | 具体验证错误的错误消息 | null           |
-| 500: 服务器内部的未知错误 | "服务器内部错误"       | null           |
+| 500: 服务器内部的未知错误 | 服务器内部错误       | null           |
 
 
 
@@ -47,10 +47,10 @@ method: GET
         siteTitle: "刘胤麟的文章", #标题
         github: "https://github.com/13886912431", #github地址
         qq: "619030878", #qq号
-        qqQrCode: "http://www.duyiedu.com/source/img/%E5%B0%8F%E6%B8%A1%E5%BE%AE%E4%BF%A1%E4%BA%8C%E7%BB%B4%E7%A0%81.png", #qq二维码
-        weixin: "LYL619030878", #微信
-        weixinQrCode: "http://www.duyiedu.com/source/img/%E5%85%AC%E4%BC%97%E5%8F%B7%E4%BA%8C%E7%BB%B4%E7%A0%81.png", #微信二维码
-        mail: "619030878@qq.com", #邮箱
+        qq_qrcode: "http://www.duyiedu.com/source/img/%E5%B0%8F%E6%B8%A1%E5%BE%AE%E4%BF%A1%E4%BA%8C%E7%BB%B4%E7%A0%81.png", #qq二维码
+        wx: "LYL619030878", #微信
+        wx_qrcode: "http://www.duyiedu.com/source/img/%E5%85%AC%E4%BC%97%E5%8F%B7%E4%BA%8C%E7%BB%B4%E7%A0%81.png", #微信二维码
+        email: "619030878@qq.com", #邮箱
         icp: "", #备案号
         githubName: "Serein.", #github名称
         favicon: "http://mdrs.yuanjin.tech/Fs4CDlC6mwe_WXLMIiXcmSJLHO4f", #网站的favicon地址
@@ -79,18 +79,17 @@ method: GET
     code: 0,
     msg: "",
     data: [{
-        id: <id>,
+        id: 1,
         name: "分类1",
-        articleCount: 10, #该分类下文章的数量
+        articles: 10, #该分类下文章的数量
     }, {
-        id: <id>,
+        id: 2,
         name: "分类2",
-        articleCount: 10,
-        order: 2
+        articles: 10,
     }, {
-        id: <id>,
+        id: 3,
         name: "分类3",
-        articleCount: 10,
+        articles: 10,
     }]
 }
 ```
@@ -107,7 +106,7 @@ method: GET
 
 说明：
 
-- params列表：
+params列表：
 
   | key        | 必填 | default | 含义                 |
   | ---------- | ---- | ------- | -------------------- |
@@ -127,9 +126,9 @@ method: GET
 		total: 786, #总数
 		rows: [ # 当前页列表数据
 			{
-				id:<id>,
+				id: 1,
 				title: "标题",
-				desc: "描述",
+				description: "描述",
 				classify: { #所属分类
 					id: 3,
 					name: "分类3"
@@ -137,8 +136,6 @@ method: GET
 				scanCount: 10,
 				commentCount: 30,
 				thumb: "缩略图地址",
-                station: "临时站位图片地址",
-				createdAt: 1604976798936
 			}
 		]
 	}

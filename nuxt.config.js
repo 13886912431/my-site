@@ -36,6 +36,7 @@ export default {
         "@/plugins/request",
         "@/plugins/api",
         "@/plugins/initVue",
+        "@/plugins/VMdEditor",
     ],
     
     components: true,

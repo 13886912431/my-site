@@ -2,8 +2,8 @@
     <div class="article-list-container" ref="container">
         <AEmpty description="暂无文章" v-if="data.rows.length === 0" />
 
-        <ul class="list" v-else>
-            <li v-for="it in data.rows" :key="it.id">
+        <div class="list" v-else>
+            <div v-for="it in data.rows" :key="it.id" class="item">
                 <div class="thumb" v-if="it.thumb">
                     <nuxt-link :to="'/article/' + it.id">
                         <img
@@ -28,9 +28,9 @@
                             {{ it.classify.name }}
                         </nuxt-link>
                     </div>
-                    <div class="desc">{{ it.desc }}</div>
+                    <div class="desc">{{ it.description }}</div>
                 </div>
-            </li>
+            </div>
 
             <APagination
                 :current="routeInfo.page"
@@ -39,7 +39,7 @@
                 :hideOnSinglePage="true"
                 @change="handelPageChange"
             />
-        </ul>
+        </div>
     </div>
 </template>
 
@@ -100,7 +100,7 @@ export default {
     box-sizing: border-box;
     scroll-behavior: smooth;
     position: relative;
-    li {
+    .item {
         display: flex;
         padding: 15px 0;
         &:not(:last-of-type) {
@@ -149,12 +149,12 @@ export default {
 }
 
 @media screen and (max-width: 1200px) {
-    .article-list-container li .thumb img {
+    .article-list-container .item .thumb img {
         max-width: 200px;
     }
 }
 @media screen and  (max-width: 992px) {
-    .article-list-container li .thumb img {
+    .article-list-container .item .thumb img {
         max-width: 150px;
     }
 }
@@ -162,7 +162,7 @@ export default {
     .article-list-container {
         padding: 10px;
     }
-    .article-list-container li .thumb img {
+    .article-list-container .item .thumb img {
         max-width: 120px;
     }
 }

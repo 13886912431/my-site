@@ -45,7 +45,6 @@ export default {
     },
     async asyncData({ $api, route, redirect }) {
         const res = await $api.getArticleDetail(route.params.id);
-        console.log(res);
         if (!res) {
             redirect("/article")
         }

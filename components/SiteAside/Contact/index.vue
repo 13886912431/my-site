@@ -1,6 +1,6 @@
 <template>
-    <ul class="contact-container">
-        <li class="item" v-for="(it, i) in items" :key="i">
+    <div class="contact-container">
+        <div class="item" v-for="(it, i) in items" :key="i">
             <a :href="it.link || 'javascript: void(0)'" :target="it.link && '_black'">
                 <AIcon :type="it.icon" theme="filled" />
                 <span>{{ it.content }}</span>
@@ -8,8 +8,8 @@
                     <img :src="it.qrcode" />
                 </div>
             </a>
-        </li>
-    </ul>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -25,21 +25,21 @@ export default {
                     icon: "github",
                 },
                 {
-                    link: `mailto:${setting.mail}`,
-                    content: setting.mail,
+                    link: `mailto:${setting.email}`,
+                    content: setting.email,
                     icon: "mail",
                 },
                 {
                     link: `tencent://message/?Menu=yes&uin=${setting.qq}&Service=300&sigT=45a1e5847943b64c6ff3990f8a9e644d2b31356cb0b4ac6b24663a3c8dd0f8aa12a595b1714f9d45`,
                     content: setting.qq,
                     icon: "qq-circle",
-                    qrcode: setting.qqQrcode,
+                    qrcode: setting.qq_qrcode,
                 },
                 {
                     link: "",
                     content: setting.wx,
                     icon: "wechat",
-                    qrcode: setting.wxQrcode,
+                    qrcode: setting.wx_qrcode,
                 }
             ]
         };

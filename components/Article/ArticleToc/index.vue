@@ -1,65 +1,47 @@
 <template>
     <div class="article-toc-container">
         <h2>目录</h2>
-        <CatalogList :list="tocWithSeleted" @select="handleSelect" />
+        <CatalogList :list="list" @select="handleSelect" />
     </div>
 </template>
 
 <script>
 import CatalogList from "@/components/CatalogList";
 
-import { debounce } from "@/utils";
-
 export default {
     name: "ArticleToc",
     components: {
         CatalogList
     },
-    props: {
-        toc: {
-            type: Array,
-        }
-    },
     data() {
         return {
             activeAnchor: "",
+            doms: []
         }
     },
     created() {
-        this.setSelectedDebounce = debounce(this.setSelected, 50);
-        this.$bus.on("scroll", this.setSelectedDebounce);
+        this.$bus.on("scroll", this.setSelected);
     },
     destroyed() {
-        this.$bus.remove("scroll", this.setSelectedDebounce);
+        this.$bus.remove("scroll", this.setSelected);
+    },
+    mounted() {
+        this.doms = document.querySelectorAll(
+            ".v-md-editor-preview [data-v-md-heading]"
+        );
     },
     computed: {
-        // 根据toc和activeAnchor属性得到带有seleted属性的toc数据
-        tocWithSeleted() {
-            const getToc = (toc = []) => {
-                return toc.map(it => ({
-                    ...it,
-                    selected: it.anchor === this.activeAnchor,
-                    children: getToc(it.children)
-                }))
-            }
-            return getToc(this.toc);
-        },
-        doms() {
-            const doms = [];
-            const addDom = (toc = []) => {
-                for (const it of toc) {
-                    const dom = document.getElementById(it.anchor);
-                    dom && doms.push(dom);
-                    addDom(it.children);
-                }
-            }
-            addDom(this.toc);
-            return doms;
+        list() {
+            return Array.from(this.doms).map(el => ({
+                name: el.innerText,
+                line: el.getAttribute("data-v-md-line"),
+                selected: this.activeAnchor === el.innerText,
+            }));
         }
     },
     methods: {
-        handleSelect(data) {
-            this.activeAnchor = data.anchor;
+        handleSelect(select) {
+            this.$bus.emit("selectToc", select.line);
         },
         setSelected() {
             const range = 150;
@@ -67,14 +49,14 @@ export default {
                 const { top } = dom.getBoundingClientRect();
                 if (top <= range && top >= 0) {
                     // 在规定范围内
-                    this.activeAnchor = dom.id
+                    this.activeAnchor = dom.innerText
                     return;
                 } else if (top > range) {
                     // 在规定范围下方
                     return;
                 } else {
                     // 在规定范围上方
-                    this.activeAnchor = dom.id
+                    this.activeAnchor = dom.innerText
                 }
             }
         }

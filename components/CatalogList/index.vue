@@ -1,19 +1,13 @@
 <template>
-    <ul class="catalog-list-container">
-        <li v-for="(it, i) in list" :key="i" @click.stop="handleClick(it)">
-            <component 
-                :is="it.anchor ? 'a': 'div'"
-                :href="it.anchor && '#' + it.anchor"
-                :class="{ active: it.selected }"
-                class="it"
-            >
-                <span >{{ it.name }}</span>
+    <div class="catalog-list-container">
+        <div class="list" v-for="(it, i) in list" :key="i" @click.stop="handleClick(it)">
+            <div :class="{ active: it.selected }" class="it">
+                <span>{{ it.name }}</span>
                 <span class="count" v-if="it.articleCount">{{ it.articleCount }}篇</span>
-            </component>
-            </span>
-            <CatalogList v-if="it.children && it.children.length" :list="it.children" @select="handleClick" />
-        </li>
-    </ul>
+            </div>
+            <!-- <CatalogList v-if="it.children && it.children.length" :list="it.children" @select="handleClick" /> -->
+        </div>
+    </div>
 </template>
 
 <script>
@@ -22,21 +16,24 @@ export default {
     props: {
         list: {
             type: Array,
-            default: () => [],
+            default: () => []
         }
     },
     methods: {
         handleClick(it) {
             this.$emit("select", it);
         },
-    }
+    },
 };
 </script>
 
 <style lang="less" scoped>
 .catalog-list-container {
     font-size: 14px;
-    li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    .list {
         .active,
         .active .count {
             color: @warn !important;

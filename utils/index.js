@@ -47,10 +47,10 @@ export async function delay(duration = 1000) {
 
 /**
  * 防抖
- * @param {*} func 需要执行的函数
- * @param {*} wait 间隔时间
+ * @param {function} func 需要执行的函数
+ * @param {number} wait 间隔时间
  */
- export function debounce(func, wait = 300) {
+export function debounce(func, wait = 300) {
     if (typeof func !== "function") return;
     let timer = null;
     return function (...arg) {

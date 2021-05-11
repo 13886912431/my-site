@@ -1,5 +1,5 @@
 /**
- * @param {String} refValue ref字符串
+ * @param {string} refValue ref字符串
  */
 export default (refValue) => {
     if (!refValue) {

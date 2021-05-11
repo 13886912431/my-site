@@ -6,7 +6,7 @@
         @mouseleave="handleMouseLeave"
     >
         <img
-            :src="data.img"
+            :src="data.image"
             @load="handleLoad"
             ref="image"
             :style="{
@@ -14,7 +14,7 @@
             }"
         />
         <div class="title" ref="title">{{ data.title }}</div>
-        <div class="desc" ref="desc">{{ data.desc }}</div>
+        <div class="desc" ref="desc">{{ data.description }}</div>
     </div>
 </template>
 

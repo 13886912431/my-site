@@ -1,46 +1,33 @@
 <template>
-    <ul class="project-container" ref="container">
-        <AEmpty description="暂未上传项目" v-if="!loading && data.length === 0" />
+    <div class="project-container" ref="container">
+        <AEmpty description="暂无项目" v-if="!loading && data.length === 0" />
 
-        <li v-for="it in data" :key="it.id" class="project-item">
+        <a v-for="it in data" :key="it.id" class="project-item" :href="it.url" target="_blank">
             <div class="thumb" v-if="it.thumb">
-                <component
-                    :is="it.url ? 'a' : 'div'"
-                    :href="it.url"
-                    target="_blank"
-                >
-                    <img :src="it.station" v-lazy="it.thumb" />
-                </component>
+                <img :src="it.station" v-lazy="it.thumb" />
             </div>
             <div class="info">
-                <h2>
-                    <component
-                        :is="it.url ? 'a' : 'div'"
-                        :href="it.url"
-                        target="_blank"
-                    >
-                        {{ it.name }}
-                    </component>
-                </h2>
+                <h2>{{ it.name }}</h2>
                 <a
                     class="github"
-                    target="_blank"
                     :href="it.github"
+                    target="_blank"
                     v-if="it.github"
                 >
                     github
                 </a>
-                <p class="desc" v-for="(desc, i) in it.desc" :key="i">
+                <ATag class="desc" v-for="(desc, i) in it.description" :key="i" color="blue">
                     {{ desc }}
-                </p>
+                </ATag>
             </div>
-        </li>
-    </ul>
+        </a>
+    </div>
 </template>
 
 <script>
-import scroll from "@/mixins/scroll";
 import { mapState } from "vuex";
+
+import scroll from "@/mixins/scroll";
 
 export default {
     mixins: [scroll("container")],
@@ -70,36 +57,35 @@ export default {
     margin-bottom: 20px;
     border-radius: 5px;
     &:hover {
-        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
         transform: scale(1.01);
     }
     .thumb {
+        overflow: hidden;
+        border-radius: 5px;
         flex: 0 0 auto;
         margin-right: 15px;
-            a,
-            div {
-                border-radius: 5px;
-                overflow: hidden;
-            }
             img {
                 display: block;
                 max-width: 230px;
                 transition: 0.3s;
                 &:hover {
-                    transform: scale(1.2);
+                    transform: scale(1.1);
                 }
             }
-    }
-    a {
-        display: block;
     }
     .info {
         line-height: 1.7;
         flex: 1 1 auto;
+        h2 {
+            margin: 0;
+        }
     }
     .github {
-        font-size: 14px;
+        display: block;
+        font-size: 15px;
         color: @primary;
+        margin: 5px 0;
     }
 }
 
