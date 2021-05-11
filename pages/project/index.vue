@@ -16,9 +16,11 @@
                 >
                     github
                 </a>
-                <ATag class="desc" v-for="(desc, i) in it.description" :key="i" color="blue">
-                    {{ desc }}
-                </ATag>
+                <div>
+                    <ATag class="desc" v-for="(desc, i) in it.description" :key="i" color="blue">
+                        {{ desc }}
+                    </ATag>
+                </div>
             </div>
         </a>
     </div>
@@ -82,9 +84,9 @@ export default {
         }
     }
     .github {
-        display: block;
         font-size: 15px;
         color: @primary;
+        display: inline-block;
         margin: 5px 0;
     }
 }
