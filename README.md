@@ -660,7 +660,7 @@ body: {
 
 ```yaml
 {
-	"code": 0,
+    "code": 0,
     "msg": "上传成功",
     "data": {
         id: 1,
