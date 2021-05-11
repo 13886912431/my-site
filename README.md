@@ -16,10 +16,10 @@ baseURL：http://119.23.65.235:5008/
 
 | code                      | msg                    | data           |
 | ------------------------- | ---------------------- | -------------- |
-| 0: 无错误                 | 成功                   | 具体的业务结果 |
+| 0: 无错误                 | suucess                   | 具体的业务结果 |
 | 401: 无权限               | 无权限的消息           | null           |
 | 406: 验证失败             | 具体验证错误的错误消息 | null           |
-| 500: 服务器内部的未知错误 | 服务器内部错误       | null           |
+| 500: 服务器内部的未知错误 | 服务器内部错误         | null           |
 
 
 
@@ -81,15 +81,15 @@ method: GET
     data: [{
         id: 1,
         name: "分类1",
-        articles: 10, #该分类下文章的数量
+        articleCount: 10, #该分类下文章的数量
     }, {
         id: 2,
         name: "分类2",
-        articles: 10,
+        articleCount: 10,
     }, {
         id: 3,
         name: "分类3",
-        articles: 10,
+        articleCount: 10,
     }]
 }
 ```
@@ -155,30 +155,13 @@ method: POST
 body: {
 	title: "文章标题",
     classifyName: "vue",    #文章分类名，没有则自动创建
-    desc: "文章描述，显示到列表页",  #文章描述，显示到列表页
-    toc:  [ # 文章章节目录
-        { name: "章节1", anchor: "title-1" },
-        {
-            name: "章节2",
-            anchor: "title-2",
-            children: [
-                { name: "章节2-1", anchor: "title-2-1" },
-                { name: "章节2-2", anchor: "title-2-2" },
-            ],
-        },
-        {
-          name: "章节3",
-          anchor: "title-3",
-        },
-    ],
-    htmlContent: "....", #文章的html内容
-    mdContent: "....", # markdown内容
-    thumb: "缩略图地址" #显示到列表页
+    description: "文章描述，显示到列表页",  #文章描述，显示到列表页
+    markdown: "....", # markdown内容
+    thumb?: "缩略图地址" #显示到列表页
 }
 ```
 
 **响应规格：**
-
 ```yaml
 {
 	code: 0,
@@ -211,7 +194,7 @@ method: GET
 	code: 0,
 	msg: "",
 	data: { 
-		id: <id>,
+		id: 1,
     	title: "文章标题",
         classify: {
         	id: 1,
@@ -219,24 +202,8 @@ method: GET
         },
         scanCount: 0, #浏览次数
         commentCount: 0, #评论数
-        desc: "文章描述，显示到列表页",  #文章描述，显示到列表页
-        createdAt: 1604976798936, #时间戳，创建日期
-        toc:  [ # 文章章节目录
-            { name: "章节1", anchor: "title-1" },
-            {
-                name: "章节2",
-                anchor: "title-2",
-                children: [
-                    { name: "章节2-1", anchor: "title-2-1" },
-                    { name: "章节2-2", anchor: "title-2-2" },
-                ],
-            },
-            {
-              name: "章节3",
-              anchor: "title-3",
-            },
-        ],
-        htmlContent: "....", #文章的html内容
+        description: "文章描述，显示到列表页",  #文章描述，显示到列表页
+        markdown: "....", #文章的html内容
         thumb: "缩略图地址" #显示到列表页
 	}
 ```
@@ -249,28 +216,11 @@ method: GET
 path: /api/article/:id
 method: PUT
 body: {
-	下列数据可选
-	title: "文章标题",
-    classifyName: "vue",    #文章分类名，没有则自动创建
-    desc: "文章描述，显示到列表页",  #文章描述，显示到列表页
-    toc:  [ # 文章章节目录
-        { name: "章节1", anchor: "title-1" },
-        {
-            name: "章节2",
-            anchor: "title-2",
-            children: [
-                { name: "章节2-1", anchor: "title-2-1" },
-                { name: "章节2-2", anchor: "title-2-2" },
-            ],
-        },
-        {
-          name: "章节3",
-          anchor: "title-3",
-        },
-    ],
-    mdContent: "....", # markdown内容
-    htmlContent: "....", #文章的html内容
-    thumb: "缩略图地址" #显示到列表页
+	title?: "文章标题",
+    classifyName?: "vue",    #文章分类名，没有则自动创建
+    description?: "文章描述，显示到列表页",  #文章描述，显示到列表页
+    markdown?: "....", # markdown内容
+    thumb?: "缩略图地址" #显示到列表页
 }
 ```
 
@@ -305,8 +255,8 @@ path: /api/comment
 method: POST
 body: {
 	nickname: "昵称",
-	content: "评论内容，纯文本",
-	articleId: <id>	#评论的文章id
+	content: "评论内容",
+	articleId: 1	#评论的文章id
 }
 ```
 
@@ -317,10 +267,9 @@ body: {
 	code: 0,
 	msg: "",
 	data: {
-        id: <id>,
+        id: 1,
         nickname: "昵称",
-        content: "评论内容，纯文本",
-        createdAt: 1604976798936,
+        content: "评论内容",
         avatar: "随机的头像地址",
         article: {
         	id: 1,
@@ -336,7 +285,6 @@ body: {
 
   - 昵称不能为空
   - 评论内容不能为空
-  - 文字id不能为空
 
 
 
@@ -353,11 +301,11 @@ method: GET
 
 - params列表：
 
-  | key       | 必填 | default | 含义                 |
-  | --------- | ---- | ------- | -------------------- |
-  | page      | 否   | 1       | 当前页码             |
-  | limit     | 否   | 10      | 页容量               |
-  | articleid | 否   | -1      | 所属文章，-1表示不限 |
+  | key       | 必填 | default | 含义     |
+  | --------- | ---- | ------- | -------- |
+  | page      | 否   | 1       | 当前页码 |
+  | limit     | 否   | 10      | 页容量   |
+  | articleid | 是   |         | 所属文章 |
 
   
 
@@ -371,15 +319,10 @@ method: GET
 		total: 786, #总数
 		rows: [ # 当前页列表数据
 			{
-                id: <id>,
+                id: 1,
                 nickname: "昵称",
                 content: "评论内容，纯文本",
-                createdAt: 1604976798936,
                 avatar: "头像地址",
-                article: {
-                	id: 1,
-                	title: "分类3",
-                },
             }
 		]
 	}
@@ -407,14 +350,14 @@ method: GET
     	{
         	id: "1",
         	title: "听我怒吼",
-        	img: "",
-        	desc: "兰尼斯特有债必偿",
+        	image: "",
+        	description: "兰尼斯特有债必偿",
     	},
     	{
         	id: "2",
         	title: "听我怒吼",
-        	img: "",
-        	desc: "兰尼斯特有债必偿",
+        	image: "",
+        	description: "兰尼斯特有债必偿",
     	},
 	]
 }
@@ -428,54 +371,24 @@ method: GET
 path: /api/banner
 method: POST
 body: {
-	title: "凛冬将至",
-     img: "",			img必须
-     desc: "人唯有恐惧的时候方能勇敢",
+	title?: "凛冬将至",
+    image: "",		
+    description?: "人唯有恐惧的时候方能勇敢",
 }
-还可以一次添加多条
-body: [
-    {
-        title: "凛冬将至",
-        img: "",
-        desc: "人唯有恐惧的时候方能勇敢",
-    },
-    {
-        title: "血火同源",
-        img: "",
-        desc: "如果我回头，一切都完了",
-    },
-]
 ```
 
 **响应规格：**
 
 ```yaml
-
 {
 	code: 0,
 	msg: "",
-	根据传入的数据
 	data: {
-        id: <id>,
+        id: 1,
         title: "血火同源",
-        img: "",
-        desc: "如果我回头，一切都完了",
+        image: "",
+        description: "如果我回头，一切都完了",
 	}
-	或者
-	data: [
-    	{	
-        	id: "1",
-        	title: "听我怒吼",
-        	img: "",
-        	desc: "兰尼斯特有债必偿",
-    	},
-    	{
-        	id: "2",
-        	title: "听我怒吼",
-        	img: "",
-        	desc: "兰尼斯特有债必偿",
-    	},
-	]
 }
 ```
 
@@ -506,9 +419,9 @@ method: DELETE
 path: /api/banner/:id
 method: PUT
 body: {
-	title: "",
-	desc: ''，
-	img: ""
+	title?: "",
+	description?: '',
+	image?: ""
 }
 ```
 
@@ -521,8 +434,8 @@ body: {
 	data: {
         id: "2",
         title: "听我怒吼",
-        img: "",
-        desc: "兰尼斯特有债必偿",
+        image: "",
+        description: "兰尼斯特有债必偿",
     },
 }
 ```
@@ -538,7 +451,7 @@ path: /api/message
 method: POST
 body: {
 	nickname: "昵称",
-	content: "留言内容，纯文本"
+	content: "留言内容"
 }
 ```
 
@@ -551,8 +464,7 @@ body: {
 	data: {
         id: <id>,
         nickname: "昵称",
-        content: "留言内容，纯文本",
-        createdAt: 1604976798936,
+        content: "留言内容",
         avatar: "随机的头像地址",
 	}
 }
@@ -590,10 +502,9 @@ method: GET
 		total: 786, #总数
 		rows: [ # 当前页列表数据
 			{
-              	id: <id>,
+              	id: 1,
               	nickname: "昵称",
-              	content: "留言内容，纯文本",
-              	createAt: 1604976798936,
+              	content: "留言内容",
               	avatar: "头像地址",
           	}
 		]
@@ -602,7 +513,7 @@ method: GET
 ```
 
 
-## 项目&demo
+## 项目
 
 ### 获取所有项目
 
@@ -621,22 +532,20 @@ method: GET
 	msg: "",
 	data: [
         {
-          id: <id>,
-          name: "个人文章系统",
-          url: "...",
-          github: "...",
-          desc: ["...", "..."],
-          thumb: "...",
-          station: "临时站位图片地址",
+            id: 1,
+            name: "个人文章系统",
+            url: "...",
+            github: "...",
+            description: ["...", "..."],
+            thumb: "...",
         },
         {
-          id: <id>,
-          name: "像素鸟",
-          url: "...",
-          github: "...",
-          desc: ["...", "..."],
-          thumb: "...",
-          station: "临时站位图片地址",
+            id: 1,
+            name: "像素鸟",
+            url: "...",
+            github: "...",
+            description: ["...", "..."],
+            thumb: "...",
         },
     ]
 }
@@ -650,11 +559,11 @@ method: GET
 path: /api/project
 method: POST
 body: {
-	name: "", 必须
-	github: "",
-	desc: [], 必须
-	thumb: "",
-	url: ""
+	name: "",
+	github?: "",
+	description?: [],
+	thumb?: "",
+	url?: ""
 }
 ```
 
@@ -665,12 +574,12 @@ body: {
 	code: 0,
 	msg: "",
 	data: {
-          id: <id>,
-          name: "个人文章系统",
-          url: "...",
-          github: "...",
-          desc: ["...", "..."],
-          thumb: "...",
+        id: 1,
+        name: "个人文章系统",
+        url: "...",
+        github: "...",
+        description: ["...", "..."],
+        thumb: "...",
     },
 }
 ```
@@ -702,11 +611,11 @@ method: DELETE
 path: /api/project/1
 method: PUT
 body: {
-	name: "个人文章系统",
-    url: "...",
-    github: "...",
-    desc: ["...", "..."],
-    thumb: "...",
+	name?: "个人文章系统",
+    url?: "...",
+    github?: "...",
+    description?: ["...", "..."],
+    thumb?: "...",
 }
 ```
 
@@ -717,30 +626,30 @@ body: {
 	code: 0,
 	msg: "",
 	data: {
-		 id: <id>,
-          name: "个人文章系统",
-          url: "...",
-          github: "...",
-          desc: ["...", "..."],
-          thumb: "...",
+       id: 1,
+        name: "个人文章系统",
+        url: "...",
+        github: "...",
+        description: ["...", "..."],
+        thumb: "...",
 	}
 }
 ```
 
-## 
 
 ## 上传图片
 
 **请求规格：**
 
 ```yaml
-path: /api/upload
+path: /api/image/upload
 method: POST
 headers: {
-	'Content-Type': multipart/form-data;
+	'Content-Type': "multipart/form-data";
 }
 body: {
-	img: ""
+	img: "",
+    type?: "upload" | "banner" | "avatar" | "qrcode"
 }
 ```
 
@@ -754,8 +663,91 @@ body: {
 	"code": 0,
     "msg": "上传成功",
     "data": {
-        "url": "http://119.23.65.235/upload/1617888685046-lqqjgz.jpg"
+        id: 1,
+        url: "http://119.23.65.235/upload/1617888685046-lqqjgz.jpg",
+        type: "upload"
     },
 }
 ```
 
+## 获取图片
+
+**请求规格：**
+
+```yaml
+path: /api/image
+method: GET
+```
+
+说明：
+
+- params列表：
+
+  | key   | 必填 | default | 
+  | ----- | ---- | ------- | 
+  | type  | 否   | upload  |
+
+**响应规格**：
+
+```yaml
+{
+	code: 0,
+    msg: "",
+    data: {
+        id: 1,
+        url: "http://119.23.65.235/upload/1617888685046-lqqjgz.jpg",
+        type: "upload"
+    },
+}
+```
+
+## 添加图片
+
+**请求规格：**
+
+```yaml
+path: /api/image
+method: POST
+boby: {
+    type?: "upload" | "banner" | "avatar" | "qrcode"
+}
+```
+
+
+**响应规格**：
+
+```yaml
+{
+	"code": 0,
+    "msg": "",
+    "data": {
+        id: 1,
+        url: "http://119.23.65.235/upload/1617888685046-lqqjgz.jpg",
+        type: "upload"
+    },
+}
+```
+
+
+## 删除图片
+
+**请求规格：**
+
+```yaml
+path: /api/image/:id
+method: DELETE
+```
+
+
+**响应规格**：
+
+```yaml
+{
+	"code": 0,
+    "msg": "",
+    "data": {
+        url: "http://119.23.65.235/upload/1617888685046-lqqjgz.jpg",
+        type: "upload"
+    },
+}
+```
