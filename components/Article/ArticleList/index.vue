@@ -7,7 +7,7 @@
                 <div class="thumb" v-if="it.thumb">
                     <nuxt-link :to="'/article/' + it.id">
                         <img
-                            :src="it.station" 
+                            src="http://119.23.65.235:5008/img/loading.gif" 
                             v-lazy="it.thumb"
                             :alt="it.title"
                             :title="it.title"

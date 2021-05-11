@@ -4,7 +4,7 @@
 
         <a v-for="it in data" :key="it.id" class="project-item" :href="it.url" target="_blank">
             <div class="thumb" v-if="it.thumb">
-                <img :src="it.station" v-lazy="it.thumb" />
+                <img src="http://119.23.65.235:5008/img/loading.gif" v-lazy="it.thumb" />
             </div>
             <div class="info">
                 <h2>{{ it.name }}</h2>
