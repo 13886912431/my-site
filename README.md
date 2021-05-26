@@ -25,41 +25,6 @@ baseURL：http://119.23.65.235:5008/
 
 # 接口规格
 
-## 全局设置
-
-### 获取全局设置
-
-**请求规格：**
-
-```yaml
-path: /api/setting
-method: GET
-```
-
-**响应规格：**
-
-```yaml
-{
-    code: 0,
-    msg: "",
-    data: {
-        avatar: "http://www.duyiedu.com/source/img/logo.png", #头像
-        siteTitle: "刘胤麟的文章", #标题
-        github: "https://github.com/13886912431", #github地址
-        qq: "619030878", #qq号
-        qq_qrcode: "http://www.duyiedu.com/source/img/%E5%B0%8F%E6%B8%A1%E5%BE%AE%E4%BF%A1%E4%BA%8C%E7%BB%B4%E7%A0%81.png", #qq二维码
-        wx: "LYL619030878", #微信
-        wx_qrcode: "http://www.duyiedu.com/source/img/%E5%85%AC%E4%BC%97%E5%8F%B7%E4%BA%8C%E7%BB%B4%E7%A0%81.png", #微信二维码
-        email: "619030878@qq.com", #邮箱
-        icp: "", #备案号
-        githubName: "Serein.", #github名称
-        favicon: "http://mdrs.yuanjin.tech/Fs4CDlC6mwe_WXLMIiXcmSJLHO4f", #网站的favicon地址
-  }
-}
-```
-
-
-
 
 ## 文章
 
@@ -108,12 +73,12 @@ method: GET
 
 params列表：
 
-  | key        | 必填 | default | 含义                 |
-  | ---------- | ---- | ------- | -------------------- |
-  | page       | 否   | 1       | 当前页码             |
-  | limit      | 否   | 10      | 页容量               |
-  | classifyId | 否   | -1      | 所属分类，-1表示全部 |
-  
+| key        | 必填 | default | 含义                 |
+| ---------- | ---- | ------- | -------------------- |
+| page       | 否   | 1       | 当前页码             |
+| limit      | 否   | 10      | 页容量               |
+| classifyId | 否   | -1      | 所属分类，-1表示全部 |
+
   
 
 **响应规格：**
@@ -683,8 +648,8 @@ method: GET
 
 - params列表：
 
-  | key   | 必填 | default | 
-  | ----- | ---- | ------- | 
+  | key   | 必填 | default |
+  | ----- | ---- | ------- |
   | type  | 否   | upload  |
 
 **响应规格**：
