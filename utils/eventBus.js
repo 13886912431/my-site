@@ -38,7 +38,6 @@ export default (() => {
         emit(type, ...arg) {
             if (!listeners[type]) return;
 
-            window.listeners = listeners;
             listeners[type].forEach(it => {
                 it.apply(this, arg);
                 if (it._once) {
