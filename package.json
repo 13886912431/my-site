@@ -18,7 +18,6 @@
     "nuxt": "^2.14.12"
   },
   "devDependencies": {
-    "@nuxtjs/style-resources": "^1.0.0",
-    "mockjs": "^1.1.0"
+    "@nuxtjs/style-resources": "^1.0.0"
   }
 }
