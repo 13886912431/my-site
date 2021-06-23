@@ -57,6 +57,6 @@ export default (() => {
             if (!type) return;
 
             listeners[type].clear();
-        }
+        },
     };
 })();

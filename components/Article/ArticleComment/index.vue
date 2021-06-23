@@ -1,24 +1,24 @@
 <template>
     <div class="article-comment-container">
         <Comment
-            title="评论列表"
+            title="评论"
             :subTitle="`(${data.total})`"
             :list="data.rows"
             :listLoading="loading"
             :finished="finished"
-            @submit="handleSubmit"
+            @submit="onSubmit"
         />
     </div>
 </template>
 
 <script>
-import Comment from "@/components/Comment";
+import Comment from '@/components/Comment';
 
-import fetchData from "@/mixins/fetchData";
-import { debounce } from "@/utils";
+import fetchData from '@/mixins/fetchData';
+import { debounce } from '@/utils';
 
 export default {
-    name: "ArticleComment",
+    name: 'ArticleComment',
     data() {
         return {
             page: 1,
@@ -42,17 +42,17 @@ export default {
             return this.$api.getComment({
                 articleId: this.$route.params.id,
                 page: this.page,
-                limit: this.limit
+                limit: this.limit,
             });
         },
-        async handleSubmit(formData, callback) {
+        async onSubmit(formData, callback) {
             const res = await this.$api.submitComment({
                 articleId: this.$route.params.id,
                 ...formData,
             });
             this.data.rows.unshift(res);
             this.data.total++;
-            callback("评论成功");
+            callback('评论成功');
         },
         // 加载更多评论
         async loadMore() {
@@ -82,8 +82,8 @@ export default {
             if (scrollHeight - scrollTop - clientHeight <= range) {
                 this.loadMore();
             }
-        }
-    }
+        },
+    },
 };
 </script>
 
@@ -93,7 +93,7 @@ export default {
     margin: 0 auto;
 }
 
-@media screen and  (max-width: 1300px) {
+@media screen and (max-width: 1300px) {
     .comment-container {
         width: 100%;
     }

@@ -1,5 +1,5 @@
 <template>
-    <div class="error-contianer">
+    <div class="error-contianer text-center">
         <h1>错误</h1>
         <h3>{{ error.message }}</h3>
     </div>
@@ -7,15 +7,16 @@
 
 <script>
 export default {
-    name: "error",
-    props: ['error']
-}
+    name: 'error',
+    props: {
+        error: Object
+    },
+};
 </script>
 
 <style lang="less" scoped>
 .error-contianer {
-    color: #f00;
-    text-align: center;
+    color: var(--color-danger);
     padding: 30px 0;
 }
 </style>

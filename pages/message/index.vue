@@ -6,16 +6,16 @@
             :listLoading="loading"
             :list="rows"
             :finished="finished"
-            @submit="handleSubmit"
+            @submit="onSubmit"
         />
     </div>
 </template>
 
 <script>
-import Comment from "@/components/Comment";
+import Comment from '@/components/Comment';
 
-import scroll from "@/mixins/scroll";
-import { debounce } from "@/utils";
+import scroll from '@/mixins/scroll';
+import { debounce } from '@/utils';
 
 export default {
     data() {
@@ -27,27 +27,27 @@ export default {
         };
     },
     components: {
-        Comment
+        Comment,
     },
-    mixins: [scroll("container")],
+    mixins: [scroll('container')],
     created() {
         this.handleScrollDebounce = debounce(this.handleScroll, 50);
-        this.$bus.on("scroll", this.handleScrollDebounce);
+        this.$bus.on('scroll', this.handleScrollDebounce);
     },
     destroyed() {
-        this.$bus.remove("scroll", this.handleScrollDebounce);
+        this.$bus.remove('scroll', this.handleScrollDebounce);
     },
     async asyncData({ $api }) {
         return await $api.getMessage({
             page: 1,
-            limit: 10
+            limit: 10,
         });
     },
     methods: {
         fetchData() {
             return this.$api.getMessage({
                 page: this.page,
-                limit: this.limit
+                limit: this.limit,
             });
         },
         handleScroll(dom) {
@@ -72,19 +72,19 @@ export default {
             const res = await this.fetchData();
             if (res.rows.length === 0) {
                 this.finished = true;
-            } else {    
+            } else {
                 this.rows = this.rows.concat(res.rows);
                 this.total = res.total;
             }
             this.loading = false;
         },
-        async handleSubmit(formData, callback) {
+        async onSubmit(formData, callback) {
             const res = await this.$api.submitMessage(formData);
             this.rows.unshift(res);
             this.total++;
-            callback("感谢您的留言");
-        }
-    }
+            callback('感谢您的留言');
+        },
+    },
 };
 </script>
 
@@ -102,7 +102,7 @@ export default {
     margin: 0 auto;
 }
 
-@media screen and  (max-width: 992px) {
+@media screen and (max-width: 992px) {
     .comment-container {
         width: 100%;
     }

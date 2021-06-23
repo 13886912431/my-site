@@ -2,7 +2,7 @@
  * 在下一帧执行回调
  * @param {*} cb
  */
- export function nextFrame(cb) {
+export function nextFrame(cb) {
     requestAnimationFrame(() => {
         requestAnimationFrame(() => {
             cb();
@@ -15,25 +15,26 @@
  * @param {*} date
  * @param {*} format格式
  */
- export function formatDate(date, format = 'YYYY-MM-DD hh:mm:ss') {
+export function formatDate(date, format = 'YYYY-MM-DD hh:mm:ss') {
     if (!date) {
         date = new Date();
-    } else if (typeof date === "string" || typeof date === "number") {
+    } else if (typeof date === 'string' || typeof date === 'number') {
         date = new Date(date);
     }
     const YYYY = date.getFullYear();
-    const MM = ("0" + (date.getMonth() + 1)).slice(-2);
-    const DD = ("0" + date.getDate()).slice(-2);
-    const hh = ("0" + date.getHours()).slice(-2);
-    const mm = ("0" + date.getMinutes()).slice(-2);
-    const ss = ("0" + date.getSeconds()).slice(-2);
+    const MM = ('0' + (date.getMonth() + 1)).slice(-2);
+    const DD = ('0' + date.getDate()).slice(-2);
+    const hh = ('0' + date.getHours()).slice(-2);
+    const mm = ('0' + date.getMinutes()).slice(-2);
+    const ss = ('0' + date.getSeconds()).slice(-2);
 
-    const result = format.replace(/YYYY/, YYYY)
+    const result = format
+        .replace(/YYYY/, YYYY)
         .replace(/MM/, MM)
         .replace(/DD/, DD)
         .replace(/hh/, hh)
         .replace(/mm/, mm)
-        .replace(/ss/, ss)
+        .replace(/ss/, ss);
     return result;
 }
 
@@ -51,9 +52,9 @@ export async function delay(duration = 1000) {
  * @param {number} wait 间隔时间
  */
 export function debounce(func, wait = 300) {
-    if (typeof func !== "function") return;
+    if (typeof func !== 'function') return;
     let timer = null;
-    return function (...arg) {
+    return function(...arg) {
         clearTimeout(timer);
         timer = setTimeout(() => {
             func.apply(this, arg);
@@ -67,7 +68,7 @@ export function getRandom(min, max) {
 
 /**
  * 获取一个仓库模块
- * @param {*} param 
+ * @param {*} param
  */
 export function getStoreModule(defaultValue) {
     return {
@@ -75,8 +76,8 @@ export function getStoreModule(defaultValue) {
         state() {
             return {
                 data: defaultValue,
-                loading: false,    
-            }
+                loading: false,
+            };
         },
         mutations: {
             setLoading(state, payload) {
@@ -84,7 +85,7 @@ export function getStoreModule(defaultValue) {
             },
             setData(state, payload) {
                 state.data = payload;
-            }
+            },
         },
         actions: {
             async fetchData({ state, commit }, api) {
@@ -101,7 +102,7 @@ export function getStoreModule(defaultValue) {
                 const res = await api();
                 commit('setData', res);
                 commit('setLoading', false);
-            }
+            },
         },
-    }
+    };
 }

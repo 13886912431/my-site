@@ -10,32 +10,32 @@
 </template>
 
 <script>
-import CommentForm from "./CommentForm";
-import CommentList from "./CommentList";
+import CommentForm from './CommentForm';
+import CommentList from './CommentList';
 
 export default {
-    name: "Comment",
+    name: 'Comment',
     props: {
         title: {
             type: String,
-            default: ""
+            default: '',
         },
         subTitle: {
             type: String,
-            default: ""
+            default: '',
         },
         list: {
             type: Array,
-            default: () => []
+            default: () => [],
         },
         listLoading: {
             type: Boolean,
-            default: false
+            default: false,
         },
         finished: {
             tyle: Boolean,
-            default: false
-        }
+            default: false,
+        },
     },
     components: {
         CommentForm,

@@ -6,10 +6,10 @@
 </template>
 
 <script>
-import CatalogList from "@/components/CatalogList";
+import CatalogList from '@/components/CatalogList';
 
 export default {
-    name: "ArticleClassify",
+    name: 'ArticleClassify',
     components: {
         CatalogList,
     },
@@ -17,11 +17,11 @@ export default {
         data: {
             type: Array,
             default: () => [],
-        }
+        },
     },
     computed: {
         routeInfo() {
-            const classifyId = +this.$route.params.id || -1;  // 分类id
+            const classifyId = +this.$route.params.id || -1; // 分类id
             const limit = +this.$route.query.limit || 10;
             return { limit, classifyId };
         },
@@ -31,7 +31,7 @@ export default {
             const list = [
                 {
                     id: -1,
-                    name: "全部",
+                    name: '全部',
                     articleCount: this.data.reduce((p, c) => p + c.articleCount, 0),
                 },
             ];
@@ -39,9 +39,9 @@ export default {
                 return {
                     ...it,
                     selected: it.id === this.routeInfo.classifyId,
-                }
+                };
             });
-        }   
+        },
     },
     methods: {
         // 选择分类
@@ -53,18 +53,18 @@ export default {
             if (data.id === -1) {
                 // 所有文章
                 this.$router.push({
-                    name: "article",
+                    name: 'article',
                     query,
                 });
             } else {
                 // 文章分类
                 this.$router.push({
-                    name: "article-classify-id",
+                    name: 'article-classify-id',
                     query,
-                    params: { id: data.id }
+                    params: { id: data.id },
                 });
             }
         },
-    }
+    },
 };
 </script>

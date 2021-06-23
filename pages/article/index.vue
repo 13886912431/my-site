@@ -12,36 +12,36 @@
 </template>
 
 <script>
-import Layout from "@/components/Layout";
-import ArticleList from "@/components/Article/ArticleList";
-import ArticleClassify from "@/components/Article/ArticleClassify";
+import Layout from '@/components/Layout';
+import ArticleList from '@/components/Article/ArticleList';
+import ArticleClassify from '@/components/Article/ArticleClassify';
 
-import { mapState } from "vuex";
+import { mapState } from 'vuex';
 
 export default {
-    name: "Article",
+    name: 'Article',
     components: {
         Layout,
         ArticleList,
-        ArticleClassify
+        ArticleClassify,
     },
     async asyncData({ $api, route }) {
         const res = await $api.getArticleList({
             page: 1,
             limit: 10,
             classifyId: +route.params.id || -1,
-        })
+        });
         return {
             articleList: res,
         };
     },
     async fetch({ store: { dispatch }, $api: { getArticleClassify } }) {
-        await dispatch("classify/fetchData", getArticleClassify);
+        await dispatch('classify/fetchData', getArticleClassify);
     },
     computed: {
-        ...mapState("classify", ["loading", "data"]),
+        ...mapState('classify', ['loading', 'data']),
         routeInfo() {
-            const classifyId = +this.$route.params.id || -1;  // 分类id
+            const classifyId = +this.$route.params.id || -1; // 分类id
             const page = +this.$route.query.page || 1;
             const limit = +this.$route.query.limit || 10;
             return { page, limit, classifyId };
@@ -51,8 +51,8 @@ export default {
         async $route() {
             this.articleList = await this.$api.getArticleList(this.routeInfo);
             this.$refs.articleList.$el.scrollTop = 0;
-        }
-    }
+        },
+    },
 };
 </script>
 

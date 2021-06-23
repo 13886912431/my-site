@@ -6,42 +6,40 @@
 </template>
 
 <script>
-import CatalogList from "@/components/CatalogList";
+import CatalogList from '@/components/CatalogList';
 
 export default {
-    name: "ArticleToc",
+    name: 'ArticleToc',
     components: {
-        CatalogList
+        CatalogList,
     },
     data() {
         return {
-            activeAnchor: "",
-            doms: []
-        }
+            activeAnchor: '',
+            doms: [],
+        };
     },
     created() {
-        this.$bus.on("scroll", this.setSelected);
+        this.$bus.on('scroll', this.setSelected);
     },
     destroyed() {
-        this.$bus.remove("scroll", this.setSelected);
+        this.$bus.remove('scroll', this.setSelected);
     },
     mounted() {
-        this.doms = document.querySelectorAll(
-            ".v-md-editor-preview [data-v-md-heading]"
-        );
+        this.doms = document.querySelectorAll('.v-md-editor-preview [data-v-md-heading]');
     },
     computed: {
         list() {
             return Array.from(this.doms).map(el => ({
                 name: el.innerText,
-                line: el.getAttribute("data-v-md-line"),
+                line: el.getAttribute('data-v-md-line'),
                 selected: this.activeAnchor === el.innerText,
             }));
-        }
+        },
     },
     methods: {
         handleSelect(select) {
-            this.$bus.emit("selectToc", select.line);
+            this.$bus.emit('selectToc', select.line);
         },
         setSelected() {
             const range = 150;
@@ -49,17 +47,17 @@ export default {
                 const { top } = dom.getBoundingClientRect();
                 if (top <= range && top >= 0) {
                     // 在规定范围内
-                    this.activeAnchor = dom.innerText
+                    this.activeAnchor = dom.innerText;
                     return;
                 } else if (top > range) {
                     // 在规定范围下方
                     return;
                 } else {
                     // 在规定范围上方
-                    this.activeAnchor = dom.innerText
+                    this.activeAnchor = dom.innerText;
                 }
             }
-        }
-    }
-}
+        },
+    },
+};
 </script>

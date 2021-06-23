@@ -1,27 +1,26 @@
 <template>
-    <header class="header-container" :class="{ open: !open }">
-        <AButton type="primary" @click="$emit('toggleOpen', !open)">
-            <AIcon :type="open ? 'menu-unfold' : 'menu-fold'" />
-        </AButton>
+    <header class="header-container align-justify-between" :class="{ open: !open }">
+        <el-button type="primary" size="small" @click="$emit('toggleOpen', !open)">
+            <i :class="open ? 'el-icon-s-unfold' : 'el-icon-s-fold'"></i>
+        </el-button>
         <h1 class="title">{{ setting.siteTitle }}</h1>
-        <AAvatar
-            :src="setting.avatar"
-            :size="40"
-        />
+        <el-avatar :src="setting.avatar" :size="40" />
     </header>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from 'vuex';
 
 export default {
-    name: "Header",
-    props: ['open'],
+    name: 'Header',
+    props: {
+        open: Boolean
+    },
     computed: {
-        ...mapState("setting", {
-            "setting": "data"
-        })
-    }
+        ...mapState('setting', {
+            setting: 'data',
+        }),
+    },
 };
 </script>
 
@@ -36,21 +35,16 @@ export default {
     z-index: 100;
     width: 100%;
     height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     padding: 0 10px;
+    box-sizing: border-box;
     &.open {
         transform: translateX(250px);
-    }
-    .ant-btn {
-        padding: 0 12px;
     }
 }
 .title {
     font-size: 1em;
     font-weight: bold;
-    color: #ccc;
+    color: var(--color-white);
 }
 
 @media screen and (min-width: 768px) {

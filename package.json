@@ -11,8 +11,8 @@
   "dependencies": {
     "@kangc/v-md-editor": "^1.6.3",
     "@nuxtjs/axios": "^5.13.1",
-    "ant-design-vue": "^1.7.2",
     "core-js": "^3.8.3",
+    "element-ui": "^2.15.2",
     "less": "^4.1.1",
     "less-loader": "^7.3.0",
     "nuxt": "^2.14.12"

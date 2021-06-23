@@ -1,3 +1,3 @@
-import { getStoreModule } from "@/utils";
+import { getStoreModule } from '@/utils';
 
 export default getStoreModule(null);

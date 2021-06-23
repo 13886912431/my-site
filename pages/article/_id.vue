@@ -1,12 +1,12 @@
 <template>
     <div class="article-id-container">
         <Layout>
-            <template>  
+            <template>
                 <div class="main" ref="main">
                     <ArticleDetail :data="data" />
                     <ArticleComment />
                 </div>
-            </template> 
+            </template>
             <template #right>
                 <ArticleToc :toc="data.toc" />
             </template>
@@ -15,24 +15,24 @@
 </template>
 
 <script>
-import Layout from "@/components/Layout";
-import ArticleDetail from "@/components/Article/ArticleDetail";
-import ArticleToc from "@/components/Article/ArticleToc";
-import ArticleComment from "@/components/Article/ArticleComment";
+import Layout from '@/components/Layout';
+import ArticleDetail from '@/components/Article/ArticleDetail';
+import ArticleToc from '@/components/Article/ArticleToc';
+import ArticleComment from '@/components/Article/ArticleComment';
 
-import scroll from "@/mixins/scroll";
+import scroll from '@/mixins/scroll';
 
 export default {
-    name: "ArticleId",
+    name: 'ArticleId',
     mixins: [scroll('main')],
     validate({ params, redirect }) {
         if (!params.id) {
-            redirect("/article");
+            redirect('/article');
             return false;
-        };
+        }
         const parseId = parseInt(params.id);
         if (!parseId) {
-            redirect("/article");
+            redirect('/article');
             return false;
         }
         return true;
@@ -41,20 +41,20 @@ export default {
         Layout,
         ArticleDetail,
         ArticleToc,
-        ArticleComment
+        ArticleComment,
     },
     async asyncData({ $api, route, redirect }) {
         const res = await $api.getArticleDetail(route.params.id);
         if (!res) {
-            redirect("/article")
+            redirect('/article');
         }
         return {
             data: res,
         };
-    },     
+    },
     updated() {
         const hash = location.hash;
-        if (hash && typeof document !== "undefined") {
+        if (hash && typeof document !== 'undefined') {
             const dom = document.getElementById(hash.slice(1));
             if (dom) {
                 setTimeout(() => {
@@ -64,7 +64,7 @@ export default {
             }
         }
     },
-}
+};
 </script>
 
 <style lang="less" scoped>

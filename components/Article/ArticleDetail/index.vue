@@ -8,9 +8,7 @@
                 <a href="#comment">评论：{{ data.commentCount }}</a>
             </span>
             <span>
-                <nuxt-link :to="'/article/classify/' + data.classify.id">
-                    分类：{{ data.classify.name }}
-                </nuxt-link>
+                <nuxt-link :to="'/article/classify/' + data.classify.id"> 分类：{{ data.classify.name }}</nuxt-link>
             </span>
         </div>
         <v-md-editor mode="preview" :value="data.markdown" ref="editor"></v-md-editor>
@@ -18,39 +16,34 @@
 </template>
 
 <script>
-import { formatDate } from "@/utils";
+import { formatDate } from '@/utils';
 
 export default {
-    name: "ArticleDetail",
+    name: 'ArticleDetail',
     props: {
-        data: {
-            type: Object,
-            required: true
-        }
+        data: Object,
     },
     mounted() {
-        this.$bus.on("selectToc", this.handleAnchorClick);
+        this.$bus.on('selectToc', this.handleAnchorClick);
     },
     destroyed() {
-        this.$bus.remove("selectToc", this.handleAnchorClick);
+        this.$bus.remove('selectToc', this.handleAnchorClick);
     },
     methods: {
         formatDate,
         handleAnchorClick(line) {
             const editor = this.$refs.editor;
-            const heading = editor.$el.querySelector(
-                `.v-md-editor-preview [data-v-md-line="${line}"]`
-            );
+            const heading = editor.$el.querySelector(`.v-md-editor-preview [data-v-md-line="${line}"]`);
 
             if (heading) {
                 editor.previewScrollToTarget({
                     target: heading,
-                    scrollContainer: document.querySelector(".article-detail-container").parentNode,
-                    top: 0
+                    scrollContainer: document.querySelector('.article-detail-container').parentNode,
+                    top: 0,
                 });
             }
-        }
-    }
+        },
+    },
 };
 </script>
 
@@ -59,12 +52,12 @@ export default {
     .title {
         margin: 0.67em 0;
     }
-    /deep/ img {
+    /deep/img {
         max-width: 100%;
     }
     .aside {
         font-size: 12px;
-        color: @gray;
+        color: var(--color-light-text);
         span {
             margin-right: 15px;
         }

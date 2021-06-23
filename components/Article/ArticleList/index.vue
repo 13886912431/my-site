@@ -1,54 +1,51 @@
 <template>
     <div class="article-list-container" ref="container">
-        <AEmpty description="暂无文章" v-if="data.rows.length === 0" />
+        <!-- <AEmpty description="暂无文章" v-if="data.rows.length === 0" /> -->
 
-        <div class="list" v-else>
-            <div v-for="it in data.rows" :key="it.id" class="item">
-                <div class="thumb" v-if="it.thumb">
-                    <nuxt-link :to="'/article/' + it.id">
-                        <img
-                            src="http://119.23.65.235:5008/img/loading.gif" 
-                            v-lazy="it.thumb"
-                            :alt="it.title"
-                            :title="it.title"
-                        />
+        <div class="list">
+            <div v-for="item in data.rows" :key="item.id" class="item">
+                <div class="thumb" v-if="item.thumb">
+                    <nuxt-link :to="'/article/' + item.id">
+                        <el-image :src="item.thumb" :alt="item.title" :title="item.title" />
                     </nuxt-link>
                 </div>
                 <div class="main">
                     <h2>
-                        <nuxt-link class="link" :to="'/article/' + it.id">
-                            {{ it.title }}
+                        <nuxt-link class="link" :to="'/article/' + item.id">
+                            {{ item.title }}
                         </nuxt-link>
                     </h2>
                     <div class="aside">
-                        <span>日期：{{ formatDate(it.createdAt) }}</span>
-                        <span>浏览：{{ it.scanCount }}</span>
-                        <span>评论：{{ it.commentCount }}</span>
-                        <nuxt-link :to="'/article/classify/' + it.classify.id">
-                            {{ it.classify.name }}
+                        <span>日期：{{ formatDate(item.createdAt) }}</span>
+                        <span>浏览：{{ item.scanCount }}</span>
+                        <span>评论：{{ item.commentCount }}</span>
+                        <nuxt-link :to="'/article/classify/' + item.classify.id">
+                            {{ item.classify.name }}
                         </nuxt-link>
                     </div>
-                    <div class="desc">{{ it.description }}</div>
+                    <div class="desc">{{ item.description }}</div>
                 </div>
             </div>
 
-            <APagination
-                :current="routeInfo.page"
+            <el-pagination
+                background
+                layout="prev, pager, next"
+                :current="queryInfo.page"
                 :total="data.total"
-                :page-size="routeInfo.limit"
-                :hideOnSinglePage="true"
-                @change="handelPageChange"
+                hide-on-single-page
+                :page-size="queryInfo.limit"
+                @change="onChangePage" 
             />
         </div>
     </div>
 </template>
 
 <script>
-import scroll from "@/mixins/scroll";
-import { formatDate } from "@/utils";
+import scroll from '@/mixins/scroll';
+import { formatDate } from '@/utils';
 
 export default {
-    name: "ArticleList",
+    name: 'ArticleList',
     mixins: [scroll('container')],
     props: {
         data: {
@@ -57,32 +54,33 @@ export default {
         },
     },
     computed: {
-        routeInfo() {
-            const classifyId = +this.$route.params.id || -1;  // 分类id
+        // 将分页信息放到query中
+        queryInfo() {
+            const classifyId = +this.$route.params.id || -1; // 分类id
             const page = +this.$route.query.page || 1;
             const limit = +this.$route.query.limit || 10;
             return { page, limit, classifyId };
-        }
+        },
     },
     methods: {
         formatDate,
-        handelPageChange(current) {
+        onChangePage(current) {
             const query = {
                 page: current,
-                limit: this.routeInfo.limit,
+                limit: this.queryInfo.limit,
             };
-            if (this.routeInfo.classifyId === -1) {
+            if (this.queryInfo.classifyId === -1) {
                 // 所有文章
                 this.$router.push({
-                    name: "article",
+                    name: 'article',
                     query,
                 });
             } else {
                 // 文章分类
                 this.$router.push({
-                    name: "article-classify-id",
+                    name: 'article-classify-id',
                     query,
-                    params: { id: this.routeInfo.classifyId }
+                    params: { id: this.queryInfo.classifyId },
                 });
             }
         },
@@ -104,7 +102,7 @@ export default {
         display: flex;
         padding: 15px 0;
         &:not(:last-of-type) {
-            border-bottom: 1px solid @gray;
+            border-bottom: 1px solid var(--color-light-text);
         }
         .thumb {
             flex: 0 0 auto;
@@ -114,13 +112,8 @@ export default {
                 overflow: hidden;
                 display: block;
             }
-            img {
-                display: block;
+            .el-image {
                 max-width: 230px;
-                transition: 0.3s;
-                &:hover {
-                    transform: scale(1.2);
-                }
             }
         }
         .main {
@@ -132,7 +125,7 @@ export default {
         .aside {
             font-size: 12px;
             margin-top: 5px;
-            color: @gray;
+            color: var(--color-light-text);
             span {
                 margin-right: 15px;
             }
@@ -143,18 +136,18 @@ export default {
         }
     }
 }
-.ant-pagination {
+.el-pagination {
     margin: 30px auto;
     width: max-content;
 }
 
 @media screen and (max-width: 1200px) {
-    .article-list-container .item .thumb img {
+    .article-list-container .item .thumb .el-image {
         max-width: 200px;
     }
 }
-@media screen and  (max-width: 992px) {
-    .article-list-container .item .thumb img {
+@media screen and (max-width: 992px) {
+    .article-list-container .item .thumb .el-image {
         max-width: 150px;
     }
 }
@@ -162,7 +155,7 @@ export default {
     .article-list-container {
         padding: 10px;
     }
-    .article-list-container .item .thumb img {
+    .article-list-container .item .thumb .el-image {
         max-width: 120px;
     }
 }

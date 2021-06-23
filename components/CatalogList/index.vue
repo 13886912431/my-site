@@ -12,16 +12,16 @@
 
 <script>
 export default {
-    name: "CatalogList",
+    name: 'CatalogList',
     props: {
         list: {
             type: Array,
-            default: () => []
-        }
+            default: () => [],
+        },
     },
     methods: {
         handleClick(it) {
-            this.$emit("select", it);
+            this.$emit('select', it);
         },
     },
 };
@@ -36,7 +36,7 @@ export default {
     .list {
         .active,
         .active .count {
-            color: @warn !important;
+            color: var(--color-warn) !important;
             font-weight: bold;
         }
         .it {
@@ -44,8 +44,8 @@ export default {
             padding: 10px 0;
             cursor: pointer;
             &:hover {
-                color: #40a9ff; 
-            }  
+                color: var(--color-primary);
+            }
         }
     }
     .catalog-list-container {
@@ -54,7 +54,7 @@ export default {
     .count {
         font-size: 12px;
         margin-left: 1em;
-        color: @gray;
+        color: var(--color-gray);
     }
 }
 </style>

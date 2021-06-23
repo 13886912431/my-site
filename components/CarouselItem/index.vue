@@ -1,16 +1,11 @@
 <template>
-    <div
-        class="carousel-item-container"
-        ref="container"
-        @mousemove="handleMouseMove"
-        @mouseleave="handleMouseLeave"
-    >
+    <div class="carousel-item-container oh pr" ref="container" @mousemove="handleMouseMove" @mouseleave="handleMouseLeave">
         <img
             :src="data.image"
             @load="handleLoad"
             ref="image"
             :style="{
-                transform: `translate(${imagePos.left}px, ${imagePos.top}px)`
+                transform: `translate(${imagePos.left}px, ${imagePos.top}px)`,
             }"
         />
         <div class="title" ref="title">{{ data.title }}</div>
@@ -19,10 +14,10 @@
 </template>
 
 <script>
-import { nextFrame } from "@/utils";
+import { nextFrame } from '@/utils';
 
 export default {
-    name: "CarouselItem",
+    name: 'CarouselItem',
     data() {
         return {
             titleWidth: 0,
@@ -33,7 +28,9 @@ export default {
             mouseY: 0,
         };
     },
-    props: ["data"],
+    props: {
+        data: Object
+    },
     computed: {
         imagePos() {
             if (!this.containerSize || !this.imageSize) return {};
@@ -45,7 +42,7 @@ export default {
             const top = (extraHeight / this.containerSize.height) * this.mouseY;
             return {
                 left: -left,
-                top: -top
+                top: -top,
             };
         },
         center() {
@@ -53,37 +50,39 @@ export default {
                 x: this.containerSize.width / 2,
                 y: this.containerSize.height / 2,
             };
-        }
+        },
     },
     mounted() {
-        const { title, desc } = this.$refs;
-        this.titleWidth = title.clientWidth;
-        this.descWidth = desc.clientWidth;
+        this.$nextTick(() => {
+            const { title, desc } = this.$refs;
+            this.titleWidth = title.clientWidth;
+            this.descWidth = desc.clientWidth;
+        })
 
         this.setSize();
         this.mouseX = this.center.x;
         this.mouseY = this.center.y;
-        window.addEventListener("resize", this.setSize);
+        window.addEventListener('resize', this.setSize);
     },
     destroyed() {
-        window.removeEventListener("resize", this.setSize);
+        window.removeEventListener('resize', this.setSize);
     },
     methods: {
         handleLoad() {
-            this.showWords();
+            this.showText();
             this.$emit('load');
         },
-        showWords() {
+        showText() {
             const { title, desc } = this.$refs;
             title.style.opacity = 1;
-            title.style.width = "0px";
-            title.style.transition = "width 1s";
-            desc.style.width = "0px";
+            title.style.width = '0px';
+            title.style.transition = 'width 1s 1s';
+            desc.style.width = '0px';
             desc.style.opacity = 1;
-            desc.style.transition = "width 1s 1s";
+            desc.style.transition = 'width 1s 2s';
             nextFrame(() => {
-                title.style.width = this.titleWidth + "px";
-                desc.style.width = this.descWidth + "px";
+                title.style.width = this.titleWidth + 'px';
+                desc.style.width = this.descWidth + 'px';
             });
         },
         handleMouseMove(e) {
@@ -94,37 +93,28 @@ export default {
         },
         setSize() {
             const { image, container } = this.$refs;
-            const {
-                clientWidth: containerWidth,
-                clientHeight: containerHeight
-            } = container;
+            const { clientWidth: containerWidth, clientHeight: containerHeight } = container;
             this.containerSize = {
                 width: containerWidth,
-                height: containerHeight
+                height: containerHeight,
             };
-            const {
-                clientWidth: imageWidth,
-                clientHeight: imageHeight
-            } = image;
+            const { clientWidth: imageWidth, clientHeight: imageHeight } = image;
             this.imageSize = {
                 width: imageWidth,
-                height: imageHeight
+                height: imageHeight,
             };
         },
         handleMouseLeave() {
             this.mouseX = this.center.x;
             this.mouseY = this.center.y;
         },
-    }
+    },
 };
 </script>
 
 <style lang="less" scoped>
 .carousel-item-container {
-    display: block !important;
-    position: relative; 
     height: 100%;
-    overflow: hidden;
     user-select: none;
     img {
         object-fit: cover;
@@ -140,28 +130,20 @@ export default {
         position: absolute;
         left: 30px;
         letter-spacing: 3px;
-        text-shadow: 1px 0 0 rgba(0, 0, 0, 0.5), -1px 0 0 rgba(0, 0, 0, 0.5),
-            0 1px 0 rgba(0, 0, 0, 0.5), 0 -1px 0 rgba(0, 0, 0, 0.5);
+        text-shadow: 1px 0 0 rgba(0, 0, 0, 0.5), -1px 0 0 rgba(0, 0, 0, 0.5), 0 1px 0 rgba(0, 0, 0, 0.5), 0 -1px 0 rgba(0, 0, 0, 0.5);
         opacity: 0;
         white-space: nowrap;
         overflow: hidden;
     }
     .title {
-        color: #fff;
+        color: var(--color-white);
         font-size: 2em;
         top: calc(60% - 40px);
     }
     .desc {
         top: calc(60% + 20px);
         font-size: 1.2em;
-        color: lighten(@gray, 20%);
+        color: var(--color-light-text);
     }
 }
-
-.ant-spin-nested-loading,
-/deep/ .ant-spin-container {
-    width: 100%;
-    height: 100%;
-}
-
 </style>

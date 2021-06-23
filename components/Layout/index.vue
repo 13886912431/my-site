@@ -14,8 +14,8 @@
 
 <script>
 export default {
-    name: "Layout",
-}
+    name: 'Layout',
+};
 </script>
 
 <style lang="less" scoped>

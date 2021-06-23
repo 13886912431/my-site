@@ -1,85 +1,78 @@
 <template>
-    <nav class="menu-container">
+    <div class="menu-container">
         <nuxt-link
-            v-for="(it, i) in items"
-            :key="i"
-            :to="it.path"
-            :exact="it.exact"
+            v-for="(item, index) in menu"
+            :key="index"
+            :to="item.path"
+            :exact="item.exact"
+            class="align-center"
             @click.native="handleClick"
         >
-            <AIcon :type="it.icon" />
-            <span>{{ it.content }}</span>
+            <i :class="item.icon"></i>
+            <span>{{ item.content }}</span>
         </nuxt-link>
-    </nav>
+    </div>
 </template>
 
 <script>
 export default {
-    name: "Menu",
+    name: 'Menu',
     data() {
         return {
-            items: [
+            menu: [
                 {
-                    path: "/",
-                    icon: "home",
-                    content: "首页",
+                    path: '/',
+                    icon: 'el-icon-house',
+                    content: '首页',
                     exact: true,
                 },
                 {
-                    path: "/article",
-                    icon: "edit",
-                    content: "文章",
-                    exact: false,
-                },
-                // {
-                //     path: "/about",
-                //     icon: "smile",
-                //     content: "关于我",
-                //     exact: true,
-                // },
-                {
-                    path: "/project",
-                    icon: "project",
-                    content: "项目",
+                    path: '/article',
+                    icon: 'el-icon-edit',
+                    content: '文章',
                     exact: false,
                 },
                 {
-                    path: "/message",
-                    icon: "message",
-                    content: "留言板",
+                    path: '/project',
+                    icon: 'el-icon-coin',
+                    content: '项目',
+                    exact: false,
+                },
+                {
+                    path: '/message',
+                    icon: 'el-icon-chat-line-square',
+                    content: '留言板',
                     exact: true,
-                }
+                },
             ],
         };
     },
     methods: {
         handleClick() {
             this.$bus.emit('menuOpen', true);
-        }
-    }
+        },
+    },
 };
 </script>
 
 <style lang="less" scoped>
 .menu-container {
-    color: @gray;
+    color: var(--color-light-text);
     a {
         padding-left: 50px;
-        display: flex;
-        align-items: center;
         height: 45px;
         white-space: nowrap;
         transition: 0.3s;
-        .anticon {
-            margin-right: 10px;
+        i {
             font-size: 16px;
+            margin-right: 10px;
         }
         &:hover {
-            color: #fff;
+            color: var(--color-white);
         }
         &.nuxt-link-active {
-            background: #2479cc;
-            color: #fff;
+            background: var(--color-menu-active);
+            color: var(--color-white);
         }
     }
 }

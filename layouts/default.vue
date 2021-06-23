@@ -5,7 +5,7 @@
             <template #left>
                 <div class="aside" :class="{ open: !open }">
                     <SiteAside />
-                 </div>
+                </div>
             </template>
             <template>
                 <div class="main">
@@ -19,25 +19,25 @@
 </template>
 
 <script>
-import Layout from "@/components/Layout";
-import SiteAside from "@/components/SiteAside";
-import Header from "@/components/Header";
-import ToTop from "@/components/ToTop";
+import Layout from '@/components/Layout';
+import SiteAside from '@/components/SiteAside';
+import Header from '@/components/Header';
+import ToTop from '@/components/ToTop';
 
-import { debounce } from "@/utils";
+import { debounce } from '@/utils';
 
 export default {
-    name: "App",
+    name: 'App',
     components: {
         Layout,
         SiteAside,
         Header,
-        ToTop
+        ToTop,
     },
     data() {
         return {
-            open: true
-        }
+            open: true,
+        };
     },
     methods: {
         resize() {
@@ -49,16 +49,16 @@ export default {
         },
         toggleOpen(val) {
             this.open = val;
-        }
+        },
     },
     created() {
-        this.$bus.on('menuOpen', this.toggleOpen);   
+        this.$bus.on('menuOpen', this.toggleOpen);
     },
     mounted() {
         const resizeDebounce = debounce(this.resize, 200);
         window.addEventListener('resize', resizeDebounce);
-    }
-}
+    },
+};
 </script>
 
 <style lang="less" scoped>
@@ -88,17 +88,5 @@ export default {
     .app-container {
         padding-top: 50px;
     }
-}
-</style>
-
-<style lang="less">
-body {
-    font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    font-size: 16px;
-    color: @words;
-    -ms-text-size-adjust: 100%;
-    -webkit-text-size-adjust: 100%;
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
 }
 </style>

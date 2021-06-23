@@ -1,7 +1,7 @@
 /**
  * @param {string} refValue ref字符串
  */
-export default (refValue) => {
+export default refValue => {
     if (!refValue) {
         console.error('scroll混合缺少参数');
         return {};
@@ -22,7 +22,7 @@ export default (refValue) => {
             },
             _handleScroll(e) {
                 this.$bus.emit('scroll', e.target);
-            }
-        }
-    }
-}
+            },
+        },
+    };
+};

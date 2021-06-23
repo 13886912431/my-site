@@ -1,25 +1,20 @@
 <template>
     <div class="project-container" ref="container">
-        <AEmpty description="暂无项目" v-if="!loading && data.length === 0" />
+        <!-- <AEmpty description="暂无项目" v-if="!loading && data.length === 0" /> -->
 
-        <a v-for="it in data" :key="it.id" class="project-item" :href="it.url" target="_blank">
-            <div class="thumb" v-if="it.thumb">
-                <img src="http://119.23.65.235:5008/img/loading.gif" v-lazy="it.thumb" />
+        <a v-for="item in data" :key="item.id" class="project-item" :href="item.url" target="_blank">
+            <div class="thumb" v-if="item.thumb">
+                <el-image :src="item.thumb" />
             </div>
             <div class="info">
-                <h2>{{ it.name }}</h2>
-                <a
-                    class="github"
-                    :href="it.github"
-                    target="_blank"
-                    v-if="it.github"
-                >
-                    github
-                </a>
+                <h2>{{ item.name }}</h2>
+                <el-link class="github" :href="item.github" target="_blank" v-if="item.github" type="primary">
+                    github地址
+                </el-link>
                 <div>
-                    <ATag class="desc" v-for="(desc, i) in it.description" :key="i" color="blue">
+                    <el-tag class="desc" v-for="(desc, i) in item.description" :key="i">
                         {{ desc }}
-                    </ATag>
+                    </el-tag>
                 </div>
             </div>
         </a>
@@ -27,17 +22,17 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from 'vuex';
 
-import scroll from "@/mixins/scroll";
+import scroll from '@/mixins/scroll';
 
 export default {
-    mixins: [scroll("container")],
+    mixins: [scroll('container')],
     computed: {
-        ...mapState("project", ["loading", "data"])
+        ...mapState('project', ['loading', 'data']),
     },
     async fetch({ $api: { getProject }, store: { dispatch } }) {
-        await dispatch("project/fetchData", getProject);
+        await dispatch('project/fetchData', getProject);
     },
 };
 </script>
@@ -67,41 +62,33 @@ export default {
         border-radius: 5px;
         flex: 0 0 auto;
         margin-right: 15px;
-            img {
-                display: block;
-                max-width: 230px;
-                transition: 0.3s;
-                &:hover {
-                    transform: scale(1.1);
-                }
-            }
+        .el-image {
+            max-width: 230px;
+        }
     }
     .info {
         line-height: 1.7;
         flex: 1 1 auto;
-        h2 {
-            margin: 0;
-        }
     }
     .github {
-        font-size: 15px;
-        color: @primary;
-        display: inline-block;
         margin: 5px 0;
+    }
+    .desc {
+        margin-right: 5px;
     }
 }
 
 @media screen and (max-width: 1200px) {
-    .project-item .thumb img {
+    .project-item .thumb .el-image {
         max-width: 200px;
     }
 }
-@media screen and  (max-width: 992px) {
-    .project-item .thumb img {
+@media screen and (max-width: 992px) {
+    .project-item .thumb .el-image {
         max-width: 150px;
     }
 }
-@media screen and  (max-width: 768px) {
+@media screen and (max-width: 768px) {
     .project-item {
         padding: 10px;
     }
@@ -110,7 +97,7 @@ export default {
     .project-container {
         padding: 10px;
     }
-    .project-item .thumb img {
+    .project-item .thumb .el-image {
         max-width: 120px;
     }
 }
